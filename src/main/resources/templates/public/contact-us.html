@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="title" content="Contact Us - News Group Management" />
+    <meta name="description" content="Get in touch with News Group Management for inquiries, support, or general information." />
+    <title th:text="#{title.contact}">Contact Us - News Group Management</title>
+    <link rel="stylesheet" th:href="@{/css/public/contact-us.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1 th:text="#{contact.heading}">Contact Us</h1>
+    <div class="section">
+        <h2 th:text="#{contact.info.title}">Contact Information</h2>
+        <div class="contact-info">
+            <p th:text="#{contact.info.description}">
+                We are here to assist you with any inquiries or support needs. Reach
+                out to us using the details below:
+            </p>
+            <p>
+                <strong th:text="#{contact.label.email}">Email:</strong>&nbsp;
+                <a th:href="@{mailto:newsgroupmanagement780@gmail.com}"
+                >newsgroupmanagement780@gmail.com</a
+                >
+            </p>
+            <p><strong th:text="#{contact.label.phone}">Phone:</strong>&nbsp;&nbsp;<span th:text="#{contact.phone}">+91-8160062992</span></p>
+            <p><strong th:text="#{contact.label.address}">Address:</strong>&nbsp;&nbsp;<span th:text="#{contact.address}">Ashram Road, Ahmedabad, India</span></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{contact.form.title}">Send Us a Message</h2>
+        <form th:action="@{/contact}" method="POST" onsubmit="return validate()">
+            <div class="form-group">
+                <label for="name" th:text="#{contact.form.name.label}">Full Name</label>
+                <input type="text" id="fullName" name="fullName" th:value="${contact?.getFullName()}" />
+                <span id="errorFullName" class="error-message" th:text="${errors?.hasFieldErrors('fullName')} ? ${errors.getFieldError('fullName').defaultMessage} : '' "></span>
+            </div>
+            <div class="form-group">
+                <label for="email" th:text="#{contact.form.email.label}">Email Address</label>
+                <input type="email" id="email" name="email" th:value="${contact?.getEmail()}" />
+                <span id="errorEmail" class="error-message" th:text="${errors?.hasFieldErrors('email')} ? ${errors.getFieldError('email').defaultMessage} : '' "></span>
+            </div>
+            <div class="form-group">
+                <label for="phone" th:text="#{contact.form.phone.label}">Phone Number</label>
+                <input type="text" id="phone" name="phone" th:value="${contact?.getPhone()}" />
+                <span id="errorPhone" class="error-message" th:text="${errors?.hasFieldErrors('phone')} ? ${errors.getFieldError('phone').defaultMessage} : '' "></span>
+            </div>
+            <div class="form-group">
+                <label for="message" th:text="#{contact.form.message.label}">Message</label>
+                <textarea id="message" name="message" th:text="${contact?.getMessage()}"></textarea>
+                <span id="errorMessage" class="error-message" th:text="${errors?.hasFieldErrors('message')} ? ${errors.getFieldError('message').defaultMessage} : '' "></span>
+            </div>
+            <button type="submit" class="submit-btn" th:text="#{contact.form.submit}">Submit Inquiry</button>
+        </form>
+    </div>
+    <h2 id="success-message" th:text="${successContact}"></h2>
+
+    <div class="footer">
+        <p th:text="#{contact.footer.copyright}">© 2025 News Group Management</p>
+        <p th:text="#{contact.footer.last.updated.full}">Last Updated: June 22, 2025, 07:19 PM IST</p>
+    </div>
+</div>
+<script th:inline="javascript">
+    const contactErrorMessages = {
+        fullNameRequired: /*[[#{error.required.fullName}]]*/ 'Full name is required.',
+        fullNameInvalid: /*[[#{error.invalid.fullName}]]*/ 'Full name must be 2-40 letters.',
+        emailRequired: /*[[#{error.required.email}]]*/ 'Email is required.',
+        emailInvalid: /*[[#{error.invalid.email}]]*/ 'Email is not valid.',
+        phoneRequired: /*[[#{error.required.phone}]]*/ 'Phone number is required.',
+        phoneInvalid: /*[[#{error.invalid.phone}]]*/ 'Enter a valid 10-digit phone number.',
+        messageRequired: /*[[#{error.required.message}]]*/ 'Message field cannot be empty.',
+        messageInvalid: /*[[#{error.invalid.message}]]*/ 'Message must be 2–500 characters long.'
+    };
+</script>
+<script th:src="@{/js/public/contact-us.js}"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta
+            name="title"
+            content="News Detail - Read Latest News, Articles & Updates | News Group Management"
+    />
+    <meta
+            name="description"
+            content="Discover in-depth articles and breaking updates across technology, business, politics, sports, and more on News Group Management’s detailed news view page."
+    />
+    <title th:text="#{title.news.detail}">News Detail - News Group Management</title>
+    <link rel="stylesheet" href="/css/user/news-detail.css">
+</head>
+<body>
+<div class="news-detail-card">
+    <div class="news-detail-img">
+        <img
+                th:src="@{'/uploads/images/post/'+${newsDetails.getImageUrl()}}"
+                alt="News Image"
+        />
+    </div>
+    <div class="news-detail-category" th:text="${newsDetails?.getCategoryName()}"></div>
+    <div class="news-detail-content">
+        <div class="news-detail-title" th:text="${newsDetails?.getTitle()}">
+        </div>
+        <div class="news-detail-description" th:text="${newsDetails?.getDescription()}">
+        </div>
+        <div class="news-detail-user">
+            <img
+                    th:src="@{'/uploads/images/profile/'+${newsDetails.getUserProfileUrl()}}"
+                    alt="User Profile"
+            />
+            <a href="" th:text="${newsDetails.getUserFirstName() +' '+ newsDetails.getUserLastName()}"></a>
+            <span class="news-detail-date" th:text="${newsDetails.getCreatedAt()}"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

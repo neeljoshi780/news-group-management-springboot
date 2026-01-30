@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="title" content="Privacy Policy - News Group Management" />
+    <meta name="description" content="Privacy Policy for News Group Management, detailing how user data is collected, used, and protected." />
+    <title th:text="#{title.privacy}">Privacy Policy - News Group Management</title>
+    <link rel="stylesheet" th:href="@{/css/public/privacy-policy.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1 th:text="#{privacy.heading}">Privacy Policy</h1>
+    <div class="section">
+        <p>
+            <span th:text="#{privacy.intro.part1}">Welcome to the</span>&nbsp;<span class="highlight" th:text="#{privacy.intro.highlight}">News Group Management</span>
+            <span th:text="#{privacy.intro.part2}">Privacy Policy. This policy explains how we collect, use, disclose,
+            and protect your personal information when you use our website. We are
+            committed to safeguarding your privacy in compliance with applicable
+            laws, including the Information Technology Act, 2000, and its
+            associated rules in India.</span>
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section1.title}">1. Information We Collect</h2>
+        <p th:text="#{privacy.section1.p}">We collect the following types of information:</p>
+        <ul>
+            <li>
+                <span class="highlight" th:text="#{privacy.section1.item1.label}">Registration Data:</span>&nbsp;<span th:text="#{privacy.section1.item1.text}"> Name, email
+                address, and password when you sign up for an account.</span>
+            </li>
+            <li>
+                <span class="highlight" th:text="#{privacy.section1.item2.label}">Content Data:</span>&nbsp;<span th:text="#{privacy.section1.item2.text}"> News articles,
+                categories, titles, descriptions, and images you post.</span>
+            </li>
+            <li>
+                <span class="highlight" th:text="#{privacy.section1.item3.label}">Usage Data:</span>&nbsp;<span th:text="#{privacy.section1.item3.text}"> IP address, browser type,
+                and interaction data collected automatically.</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section2.title}">2. How We Use Your Information</h2>
+        <p th:text="#{privacy.section2.p}">We use your information to:</p>
+        <ul>
+            <li th:text="#{privacy.section2.item1}">Provide and maintain our website services.</li>
+            <li th:text="#{privacy.section2.item2}">Moderate and review user-generated content.</li>
+            <li th:text="#{privacy.section2.item3}">
+                Comply with legal obligations and protect against illegal
+                activities.
+            </li>
+            <li th:text="#{privacy.section2.item4}">Improve our platform based on user feedback and analytics.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section3.title}">3. Data Sharing and Disclosure</h2>
+        <p th:text="#{privacy.section3.p}">
+            We do not sell your personal information. However, we may share it
+            with:
+        </p>
+        <ul>
+            <li>
+                <span class="highlight" th:text="#{privacy.section3.item1.label}">Service Providers:</span>&nbsp;<span th:text="#{privacy.section3.item1.text}"> Third-party
+                vendors who assist with website operations (e.g., hosting,
+                analytics).</span>
+            </li>
+            <li>
+                <span class="highlight" th:text="#{privacy.section3.item2.label}">Legal Authorities:</span>&nbsp;<span th:text="#{privacy.section3.item2.text}"> When required by
+                law or to investigate illegal activities (e.g., terrorism, fake
+                news).</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section4.title}">4. Data Security</h2>
+        <p th:text="#{privacy.section4.p}">
+            We implement industry-standard security measures, including encryption
+            and secure servers, to protect your data. However, no online
+            transmission is fully secure, and we cannot guarantee absolute
+            security.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section5.title}">5. User Rights</h2>
+        <p th:text="#{privacy.section5.p}">You have the right to:</p>
+        <ul>
+            <li th:text="#{privacy.section5.item1}">Access, correct, or delete your personal information.</li>
+            <li th:text="#{privacy.section5.item2}">Request data portability or restrict processing.</li>
+            <li>
+                <span th:text="#{privacy.section5.item3.prefix}">Object to data usage by contacting</span>
+                <a href="mailto:newsgroupmanagement780@gmail.com"
+                >newsgroupmanagement780@gmail.com</a
+                >.
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section6.title}">6. Cookies and Tracking</h2>
+        <p th:text="#{privacy.section6.p}">
+            We use cookies to enhance your experience and analyze usage. You can
+            manage cookie preferences through your browser settings.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section7.title}">7. Retention of Data</h2>
+        <p th:text="#{privacy.section7.p}">
+            We retain your data only as long as necessary to fulfill the purposes
+            outlined or as required by law. Inactive accounts may be deleted after
+            12 months.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section8.title}">8. International Data Transfers</h2>
+        <p th:text="#{privacy.section8.p}">
+            Your data may be transferred to servers outside India. We ensure
+            compliance with applicable data protection laws during such transfers.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section9.title}">9. Changes to This Policy</h2>
+        <p th:text="#{privacy.section9.p}">
+            We may update this Privacy Policy periodically. Significant changes
+            will be notified via email or a notice on the website. Continued use
+            after updates signifies acceptance.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{privacy.section10.title}">10. Contact Us</h2>
+        <p>
+            <span th:text="#{privacy.section10.prefix}">For privacy concerns or requests, contact us at</span>
+            <a href="mailto:newsgroupmanagement780@gmail.com"
+            >newsgroupmanagement780@gmail.com</a
+            >.
+        </p>
+    </div>
+
+    <div class="footer">
+        <p th:text="#{privacy.footer.copyright}">© 2025 News Group Management</p>
+        <p th:text="#{privacy.footer.updated}">Last Updated: June 22, 2025, 07:11 PM IST</p>
+    </div>
+</div>
+</body>
+</html>

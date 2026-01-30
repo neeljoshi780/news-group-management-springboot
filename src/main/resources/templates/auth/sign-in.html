@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="#{title.sign.in}">Sign In - News Group Management</title>
+    <link rel="stylesheet" th:href="@{/css/auth/sign-in.css}" />
+</head>
+<body>
+<div class="sign-in-container">
+    <div class="sign-in-header">
+        <h1 th:text="#{app.name}">News Group Management</h1>
+    </div>
+    <div
+            class="email-password-block"
+            th:if="${activeSignIn=='emailAndPassword'}"
+    >
+        <form
+                class="sign-in-form"
+                th:action="@{/auth/pre-login}"
+                method="POST"
+                onsubmit="return emailValidate()"
+        >
+            <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    th:value="${email}"
+                    placeholder="Email Address"
+                    th:placeholder="#{email.placeholder}"
+            />
+            <p
+                    id="email-invalid"
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('email')} ? ${errors?.getFieldError('email').defaultMessage} : '' "
+            ></p>
+            <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    th:value="${password}"
+                    placeholder="Password"
+                    th:placeholder="#{placeholder.password}"
+            />
+            <p
+                    id="password-invalid"
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('password')} ? ${errors.getFieldError('password').defaultMessage} : '' "
+            ></p>
+            <div class="forgot-password">
+                <a
+                        th:href="@{/auth/forgot-password}"
+                        th:text="#{link.forgot.password}"
+                >Forgot Password?</a
+                >
+            </div>
+            <p
+                    id="credentials-error"
+                    class="error-message"
+                    th:text="${authError}"
+            ></p>
+            <button
+                    type="submit"
+                    class="sign-in-button"
+                    th:text="#{button.sign.in}"
+            >
+                Sign In
+            </button>
+        </form>
+    </div>
+    <div
+            class="two-factor-email-otp-block"
+            th:if="${activeSignIn=='twoFactorEmail'}"
+    >
+        <div class="form-divider" th:text="#{divider.2fa}">
+            Two-Factor Authentication
+        </div>
+        <form
+                class="otp-form"
+                th:action="@{/auth/sign-in/verify-login-otp}"
+                method="POST"
+                onsubmit="return otpValidate()"
+        >
+            <input
+                    type="text"
+                    name="otp"
+                    id="otp"
+                    th:value="${twoFactorOtp}"
+                    placeholder="______"
+                    maxlength="6"
+                    inputmode="numeric"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+            />
+            <p
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('otp')} ? ${errors?.getFieldError('otp').defaultMessage} : '' "
+            ></p>
+            <p id="otp-invalid" class="error-message" th:text="${authError}"></p>
+            <button
+                    type="submit"
+                    class="otp-button"
+                    th:text="#{button.verify.otp}"
+            >
+                Verify OTP
+            </button>
+        </form>
+    </div>
+    <div class="bottom-or-block" th:if="${activeSignIn=='emailAndPassword'}">
+        <div class="divider" th:text="#{text.or}">Or</div>
+        <a th:href="@{/oauth2/authorization/google}" class="google-sign-in">
+            <img src="https://www.google.com/favicon.ico" alt="Google Icon" />
+            <span th:text="#{button.google}">Continue with Google</span>
+        </a>
+        <p
+                id="google-sign-in-error"
+                class="error-message"
+                th:text="${oauth2Error}"
+        ></p>
+        <div class="signup-link">
+          <span th:text="#{text.no.account}">Don't have an account? </span
+          >&nbsp;<a th:href="@{/auth/sign-up}" th:text="#{link.signup}"
+        >Sign Up</a
+        >
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    const signInErrorMessages = {
+        emailRequired: /*[[#{error.required.email}]]*/ "Email is required.",
+        emailInvalid: /*[[#{error.invalid.email}]]*/ "Email is not valid.",
+        passwordRequired:
+        /*[[#{error.required.password}]]*/ "Password is required.",
+        passwordInvalid: /*[[#{error.invalid.password}]]*/ "Invalid password.",
+        otpRequired: /*[[#{error.required.otp}]]*/ "OTP is required.",
+        otpInvalid:
+        /*[[#{error.invalid.otp}]]*/ "OTP must be exactly 6 digits.",
+    };
+</script>
+<script th:src="@{/js/auth/sign-in.js}"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar</title>
+</head>
+<body>
+<!-- Sidebar -->
+<nav class="sidebar" th:fragment="sidebar">
+    <div class="sidebar-header">
+        <h2><i class="fas fa-shield-alt"></i> Admin Panel</h2>
+        <button id="sidebar-close" class="btn-close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <ul>
+        <li>
+            <a th:href="@{/admin/dashboard}"
+            ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+            >
+        </li>
+        <li th:if="${IS_MASTER_ADMIN==true}">
+            <a th:href="@{/master/manage-admins}"
+            ><i class="fas fa-user-shield"></i> Admins</a
+            >
+        </li>
+        <li>
+            <a th:href="@{/admin/manage-users}"><i class="fas fa-users"></i> Users</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/manage-news}"><i class="fas fa-newspaper"></i> News</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/manage-category}"
+            ><i class="fas fa-tags"></i> Categories</a
+            >
+        </li>
+        <li th:if="${IS_MASTER_ADMIN==true}">
+            <a th:href="@{/master/manage-admins/manage-block-admins}"
+            ><i class="fas fa-ban"></i> Blocked Admins</a
+            >
+        </li>
+        <li>
+            <a th:href="@{/admin/manage-block-users}"
+            ><i class="fas fa-ban"></i> Blocked Users</a
+            >
+        </li>
+        <li th:if="${IS_MASTER_ADMIN==true}">
+            <a th:href="@{/master/manage-admins/manage-deleted-admins}"
+            ><i class="fas fa-user-minus"></i> Deleted Admins</a
+            >
+        </li>
+        <li>
+            <a th:href="@{/admin/manage-deleted-users}"
+            ><i class="fas fa-user-minus"></i> Deleted Users</a
+            >
+        </li>
+        <li>
+            <a th:href="@{/admin/manage-contact}"
+            ><i class="fas fa-envelope"></i> Contact</a
+            >
+        </li>
+    </ul>
+</nav>
+
+<!-- Main Container -->
+<div class="main-container" th:fragment="header">
+    <!-- Header -->
+    <header class="top-bar">
+        <div class="top-bar-left">
+            <button id="menu-toggle" class="btn-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1><i class="fas fa-newspaper"></i> News Group Management</h1>
+        </div>
+        <div class="top-bar-right">
+            <span id="current-date" th:text="${formattedDate}"></span>
+            <div class="user-profile">
+                <img
+                        th:src="@{'/uploads/images/profile/' + ${loggedInUser?.profilePhotoUrl}}" alt="Profile"
+                />
+                <span th:text="${loggedInUser?.firstName+' '+loggedInUser?.lastName}"></span>
+                <div class="dropdown">
+                    <a th:href="@{/admin/profile}"
+                    ><i class="fas fa-user"></i> Profile</a
+                    >
+                    <form th:action="@{/auth/logout}" method="POST">
+                        <button type="submit" class="btn-logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

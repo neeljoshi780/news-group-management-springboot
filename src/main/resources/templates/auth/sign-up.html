@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="#{title.signup}">Sign Up - News Group Management</title>
+    <link rel="stylesheet" th:href="@{/css/auth/sign-up.css}" />
+</head>
+<body>
+<div class="signup-container">
+    <div class="signup-header">
+        <h1 th:text="#{app.name}">News Group Management</h1>
+    </div>
+    <div class="email-block" th:if="${activeSignUp=='email'}">
+        <form
+                class="email-form"
+                th:action="@{/auth/sign-up/otp/send}"
+                method="POST"
+                onsubmit="return emailValidate()"
+        >
+            <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    th:value="${email}"
+                    placeholder="Email Address"
+                    th:placeholder="#{email.placeholder}"
+            />
+            <p
+                    id="email-invalid"
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('email')} ? ${errors.getFieldError('email').defaultMessage} : '' "
+            >
+                Hello
+            </p>
+            <p id="email-exists" class="error-message" th:text="${authError}"></p>
+            <div class="checkbox-container">
+                <input type="checkbox" name="termsAccepted" id="terms-checkbox" />
+                <label for="terms-checkbox"
+                ><span th:text="#{terms.agree}"> I agree to the</span
+                ><a th:href="@{/public/terms}"
+                >&nbsp;<span th:text="#{terms.link}">Terms of Use</span
+                >&nbsp;</a
+                ><span th:text="#{and}">and</span>&nbsp;
+                    <a th:href="@{/public/privacy-policy}"
+                    ><span th:text="#{privacy.link}">Privacy Policy</span></a
+                    >
+                </label>
+            </div>
+            <p id="terms-error" class="error-message" th:text="${termsError}"></p>
+            <button
+                    type="submit"
+                    class="signup-button"
+                    th:text="#{button.send.otp}"
+            >
+                Send OTP
+            </button>
+        </form>
+    </div>
+    <div class="verify-otp-block" th:if="${activeSignUp=='otp'}">
+        <div class="form-divider" th:text="#{divider.verify.otp}">
+            Verify OTP
+        </div>
+        <form
+                class="otp-form"
+                th:action="@{/auth/sign-up/otp/verify}"
+                method="POST"
+                onsubmit="return otpValidate()"
+        >
+            <input
+                    type="text"
+                    id="otp"
+                    name="otp"
+                    th:value="${otp}"
+                    placeholder="______"
+                    maxlength="6"
+                    inputmode="numeric"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+            />
+            <p
+                    id="otp-invalid"
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('otp')} ? ${errors.getFieldError('otp').defaultMessage} : '' "
+            >
+            </p>
+            <p
+                    id="otp-incorrect"
+                    class="error-message"
+                    th:text="${authError}"
+            ></p>
+            <button
+                    type="submit"
+                    class="verify-otp-button"
+                    th:text="#{otp.placeholder}"
+            >
+                Verify OTP
+            </button>
+        </form>
+    </div>
+    <div class="name-block" th:if="${activeSignUp=='name'}">
+        <div class="form-divider" th:text="#{divider.enter.name}">
+            Enter Name
+        </div>
+        <form
+                class="name-form"
+                th:action="@{/auth/sign-up/name}"
+                method="POST"
+                onsubmit="return nameValidate()"
+        >
+            <input
+                    type="text"
+                    name="firstName"
+                    id="first-name"
+                    th:value="${firstName}"
+                    placeholder="First Name"
+                    th:placeholder="#{first.name.placeholder}"
+            />
+            <p
+                    id="first-name-invalid"
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('firstName')} ? ${errors.getFieldError('firstName').defaultMessage} : '' "
+            ></p>
+            <input
+                    type="text"
+                    name="lastName"
+                    id="last-name"
+                    th:value="${lastName}"
+                    placeholder="Last Name"
+                    th:placeholder="#{last.name.placeholder}"
+            />
+            <p
+                    id="last-name-invalid"
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('lastName')} ? ${errors.getFieldError('lastName').defaultMessage} : '' "
+            ></p>
+            <button
+                    type="submit"
+                    class="submit-name-button"
+                    th:text="#{button.submit.name}"
+            >
+                Submit Name
+            </button>
+        </form>
+    </div>
+    <div class="password-block" th:if="${activeSignUp=='password'}">
+        <div class="form-divider" th:text="#{divider.set.password}">
+            Set Password
+        </div>
+        <form
+                class="password-form"
+                th:action="@{/auth/sign-up/password}"
+                method="POST"
+                onsubmit="return passwordValidate()"
+        >
+            <input
+                    type="password"
+                    name="password"
+                    id="new-password"
+                    th:value="${password}"
+                    placeholder="New Password"
+                    th:placeholder="#{password.new.placeholder}"
+            />
+            <p
+                    id="password-invalid"
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('password')} ? ${errors.getFieldError('password').defaultMessage} : '' "
+            ></p>
+            <input
+                    type="password"
+                    name="confirmPassword"
+                    id="confirm-password"
+                    th:value="${confirmPassword}"
+                    placeholder="Confirm Password"
+                    th:placeholder="#{password.confirm.placeholder}"
+            />
+            <p
+                    id="password-mismatch"
+                    class="error-message"
+                    th:text="${errors?.hasFieldErrors('confirmPassword')} ? ${errors.getFieldError('confirmPassword').defaultMessage} : '' "
+            >
+            </p>
+            <button
+                    type="submit"
+                    class="set-password-button"
+                    th:text="#{button.set.password}"
+            >
+                Set Password
+            </button>
+        </form>
+    </div>
+    <div class="bottom-or-block" th:if="${activeSignUp=='email'}">
+        <div class="divider" th:text="#{or}">Or</div>
+        <a th:href="@{/oauth2/authorization/google}" class="google-signup">
+            <img src="https://www.google.com/favicon.ico" alt="Google Icon" />
+            <span th:text="#{continue.google}">Continue with Google</span>
+        </a>
+        <p
+                id="google-sign-in-error"
+                class="error-message"
+                th:text="${oauth2Error}"
+        ></p>
+        <div class="login-link">
+            <p>
+            <span th:text="#{already.account}">Already have an account?</span
+            >&nbsp;<a th:href="@{/auth/sign-in}" th:text="#{sign.in}"
+            >Sign In</a
+            >
+            </p>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    const signUpErrorMessages = {
+        emailRequired: /*[[#{error.required.email}]]*/ "Email is required.",
+        emailInvalid: /*[[#{error.invalid.email}]]*/ "Email is not valid.",
+        termsRequired:
+        /*[[#{error.required.terms}]]*/ "You must agree to the Terms and Privacy Policy.",
+        otpRequired: /*[[#{error.required.otp}]]*/ "OTP is required.",
+        otpInvalid:
+        /*[[#{error.invalid.otp}]]*/ "OTP must be exactly 6 digits.",
+        firstNameRequired:
+        /*[[#{error.required.firstname}]]*/ "First name is required.",
+        firstNameInvalid:
+        /*[[#{error.invalid.firstname}]]*/ "First name must be 1-30 letters.",
+        lastNameRequired:
+        /*[[#{error.required.lastname}]]*/ "Last name is required.",
+        lastNameInvalid:
+        /*[[#{error.invalid.lastname}]]*/ "Last name must be 1-30 letters.",
+        passwordRequired:
+        /*[[#{error.required.password}]]*/ "Password is required.",
+        passwordInvalid:
+        /*[[#{error.invalid.password}]]*/ "Include letters, numbers, and symbols 8-16.",
+        passwordMismatch:
+        /*[[#{error.password.mismatch}]]*/ "Passwords do not match.",
+    };
+</script>
+<script th:src="@{/js/auth/sign-up.js}"></script>
+</body>
+</html>

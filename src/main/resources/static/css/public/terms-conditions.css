@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ecf0f1;
+    color: #34495e;
+    font-family: "Roboto", sans-serif;
+    line-height: 1.7;
+    padding: 25px;
+}
+
+.container {
+    max-width: 950px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(52, 73, 94, 0.15);
+    padding: 50px;
+    transition: box-shadow 0.3s ease;
+}
+
+.container:hover {
+    box-shadow: 0 15px 40px rgba(52, 73, 94, 0.25);
+}
+
+h1 {
+    font-family: "Lora", serif;
+    font-weight: 600;
+    font-size: 36px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #bdc3c7;
+    padding-bottom: 15px;
+}
+
+h2 {
+    font-family: "Lora", serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: #2c3e50;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    border-left: 5px solid #3498db;
+    padding-left: 15px;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+ul {
+    list-style-type: none;
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+
+li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+li:before {
+    content: "•";
+    color: #3498db;
+    position: absolute;
+    left: 0;
+    font-size: 18px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.strong {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+.footer {
+    text-align: center;
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #bdc3c7;
+    font-style: italic;
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    ul {
+        margin-left: 15px;
+    }
+
+    li {
+        padding-left: 15px;
+    }
+}

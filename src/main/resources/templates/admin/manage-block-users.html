@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel | Block User Management - News Group Management</title>
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/css/admin/manage-block-users.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+</head>
+<body>
+<!-- Include Sidebar -->
+<div th:replace="~{admin/sidebar :: sidebar}"></div>
+
+<!-- Include Header -->
+<div th:replace="~{admin/sidebar :: header}"></div>
+<!-- Main Content -->
+<main class="dashboard">
+    <div class="widget-container">
+        <div class="widget table-widget">
+            <div class="table-header">
+                <h3><i class="fas fa-ban"></i> Manage Blocked Users</h3>
+                <div class="table-controls">
+                    <!-- Search Form -->
+                    <form
+                            class="search-form"
+                            th:action="@{/admin/block/user/search}"
+                            method="get"
+                    >
+                        <div class="search-container">
+                            <input
+                                    type="text"
+                                    name="searchPattern"
+                                    th:value="${searchPattern}"
+                                    placeholder="Search by name, email, or phone..."
+                                    class="search-input"
+                            />
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Users Table -->
+            <div class="table-responsive">
+                <table class="users-table">
+                    <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Gender</th>
+                        <th>Profile Img</th>
+                        <th>Reg. Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${blockUsers}">
+                        <td th:text="${user?.getId()}"></td>
+                        <td th:text="${user?.getFirstName()}"></td>
+                        <td th:text="${user?.getLastName()}"></td>
+                        <td th:text="${user?.getEmail()}"></td>
+                        <td th:text="${user?.getPhone()}"></td>
+                        <td th:text="${user?.getGender()}"></td>
+                        <td>
+                            <img
+                                    th:src="@{'/uploads/images/profile/' + ${user?.getProfilePhotoUrl()}}"
+                                    alt="Profile"
+                                    class="table-img"
+                            />
+                        </td>
+                        <td th:text="${user?.getCreatedAt()}"></td>
+                        <td class="action-buttons">
+                            <form th:action="@{/admin/user/unblock}" method="POST">
+                                <input type="hidden" name="userId" th:value="${user?.getId()}" />
+                                <button type="submit" class="btn-unblock">
+                                    <i class="fas fa-unlock"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- UnBlock Confirmation Popup -->
+<div class="popup-overlay" id="blockPopup">
+    <div class="popup-content">
+        <h3 class="popup-title">Confirm UnBlock</h3>
+        <p class="popup-message">Are you sure you want to unblock this user?</p>
+        <div class="popup-actions">
+            <button class="popup-btn confirm-btn" data-form="form-block">
+                Yes
+            </button>
+            <button class="popup-btn cancel-btn">No</button>
+        </div>
+    </div>
+</div>
+<script src="/js/admin/manage-block-users.js"></script>
+</body>
+</html>

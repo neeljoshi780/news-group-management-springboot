@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="title" content="News Group Management - User Profile" />
+    <meta
+            name="description"
+            content="Manage your personal details, profile picture, security, news uploads, and subscriptions on News Group Management."
+    />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+    <title th:text="#{title.user.profile}">
+        User Profile - News Group Management
+    </title>
+    <link rel="stylesheet" th:href="@{/css/user/user-profile.css}" />
+</head>
+<body>
+<div class="profile-container">
+    <div class="nav-tabs">
+        <div class="tab-links">
+            <a
+                    href="#"
+                    class="tab-link active"
+                    data-tab="user-details"
+                    th:text="#{tab.profile.info}"
+            >Profile Information</a
+            >
+            <a
+                    href="#"
+                    class="tab-link"
+                    data-tab="security"
+                    th:text="#{tab.security}"
+            >Account Security</a
+            >
+            <a
+                    href="#"
+                    class="tab-link"
+                    data-tab="uploads-news"
+                    th:text="#{tab.uploads}"
+            >My Posts</a
+            >
+            <a
+                    href="#"
+                    class="tab-link"
+                    data-tab="subscriptions"
+                    th:text="#{tab.subscriptions}"
+            >Newsletter Preferences</a
+            >
+        </div>
+        <form class="logout-form" th:action="@{/auth/logout}" method="POST">
+            <button type="submit" class="logout-btn" th:text="#{button.logout}">
+                Logout
+            </button>
+        </form>
+    </div>
+
+    <div class="section user-details active">
+        <div class="profile-header">
+            <div class="profile-photo-container">
+                <img
+                        th:src="@{'/uploads/images/profile/' + ${loggedInUser?.getProfilePhotoUrl()}}"
+                        alt="User Profile Photo"
+                        class="profile-photo"
+                />
+            </div>
+            <div class="profile-info">
+                <h1
+                        th:text="${loggedInUser?.getFirstName()+' '+loggedInUser?.getLastName()}"
+                ></h1>
+            </div>
+        </div>
+        <p
+                id="profile-photo-invalid"
+                class="error-message"
+                th:text="${profileError}"
+        ></p>
+        <form
+                class="photo-update-form"
+                th:action="@{/user/profile-photo/update}"
+                method="POST"
+                enctype="multipart/form-data"
+                onsubmit=" return profileValidate()"
+        >
+            <input
+                    type="file"
+                    id="profile-photo"
+                    name="profile-photo"
+                    accept="image/*"
+            />
+            <label for="profile-photo" th:text="#{label.select.file}"
+            >Select File</label
+            >
+            <button type="submit" th:text="#{button.upload}">Upload</button>
+        </form>
+        <form
+                class="user-details-form"
+                th:action="@{/user/profile-info/update}"
+                method="POST"
+                id="user-details-form"
+                onsubmit="return validate()"
+        >
+            <div class="form-group">
+                <input
+                        type="hidden"
+                        id="loggedInUserId"
+                        th:value="${loggedInUser?.getId()}"
+                />
+                <label for="first-name" th:text="#{label.firstname}"
+                >First Name</label
+                >
+                <input
+                        type="text"
+                        id="first-name"
+                        th:value="${loggedInUser?.getFirstName()}"
+                        name="firstName"
+                />
+                <p
+                        id="first-name-invalid"
+                        class="error-message"
+                        th:text="${errors?.get('firstName')}"
+                ></p>
+            </div>
+            <div class="form-group">
+                <label for="last-name" th:text="#{label.lastname}">Last Name</label>
+                <input
+                        type="text"
+                        id="last-name"
+                        th:value="${loggedInUser?.getLastName()}"
+                        name="lastName"
+                />
+                <p
+                        id="last-name-invalid"
+                        class="error-message"
+                        th:text="${errors?.get('lastName')}"
+                ></p>
+            </div>
+            <div class="form-group">
+                <label for="email" th:text="#{label.email}">Email</label>
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        th:value="${loggedInUser?.getEmail()}"
+                />
+                <p
+                        id="email-invalid"
+                        class="error-message"
+                        th:text="${emailChangeError}"
+                ></p>
+            </div>
+            <div class="form-group">
+                <label for="phone" th:text="#{label.phone}">Phone</label>
+                <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        th:value="${loggedInUser?.getPhone()}"
+                />
+                <p
+                        id="phone-invalid"
+                        class="error-message"
+                        th:text="${errors?.get('phone')}"
+                ></p>
+            </div>
+            <div class="form-group">
+                <label for="city" th:text="#{label.city}">City</label>
+                <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        th:value="${loggedInUser?.getCity()}"
+                />
+                <p
+                        id="city-invalid"
+                        class="error-message"
+                        th:text="${errors?.get('city')}"
+                ></p>
+            </div>
+            <div class="form-group">
+                <label for="state" th:text="#{label.state}">State</label>
+                <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        th:value="${loggedInUser?.getState()}"
+                />
+                <p
+                        id="state-invalid"
+                        class="error-message"
+                        th:text="${errors?.get('state')}"
+                ></p>
+            </div>
+            <div class="form-group">
+                <label for="dob" th:text="#{label.dob}">Date of Birth</label>
+                <input
+                        type="date"
+                        id="dob"
+                        name="dob"
+                        th:value="${loggedInUser?.getDob()}"
+                />
+                <p
+                        id="dob-invalid"
+                        class="error-message"
+                        th:text="${errors?.get('dob')}"
+                ></p>
+            </div>
+            <div class="form-group">
+                <label for="gender" th:text="#{label.gender}">Gender</label>
+                <select id="gender" name="gender">
+                    <option
+                            th:value="''"
+                            disabled
+                            selected
+                            th:text="#{gender.select}"
+                            th:selected="${loggedInUser?.getGender()==null}"
+                    >
+                        Select your gender
+                    </option>
+                    <option
+                            th:value="MALE"
+                            th:text="#{gender.male}"
+                            th:selected="${loggedInUser?.getGender()?.name()=='MALE'}"
+                    >
+                        Male
+                    </option>
+                    <option
+                            th:value="FEMALE"
+                            th:text="#{gender.female}"
+                            th:selected="${loggedInUser?.getGender()?.name()=='FEMALE'}"
+                    >
+                        Female
+                    </option>
+                    <option
+                            th:value="OTHER"
+                            th:text="#{gender.other}"
+                            th:selected="${loggedInUser?.getGender()?.name()=='OTHER'}"
+                    >
+                        Other
+                    </option>
+                </select>
+                <p
+                        id="gender-invalid"
+                        class="error-message"
+                        th:text="${errors?.get('gender')}"
+                ></p>
+            </div>
+        </form>
+        <div class="action-buttons">
+            <button
+                    type="submit"
+                    form="user-details-form"
+                    class="save-btn"
+                    th:text="#{button.save.changes}"
+            >
+                Save Changes
+            </button>
+            <form class="delete-account-form" id="delete-account">
+                <button
+                        type="button"
+                        class="delete-account"
+                        onclick="showPopup(event)"
+                        th:text="#{button.delete.account}"
+                >
+                    Delete Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="section security">
+        <div
+                class="two-step-form-block"
+                th:if="${loggedInUser?.isPasswordSet() == true}"
+        >
+            <h2
+                    style="margin-bottom: 20px"
+                    th:text="#{heading.two.step.settings}"
+            >
+                Two-Step Verification Settings
+            </h2>
+            <p
+                    class="status-text"
+                    style="margin-bottom: 15px"
+                    th:text="#{two.step.status.enable}"
+                    th:if="${loggedInUser?.isTwoFactorEnabled() == true}"
+            >
+                Two-step verification is currently enabled.
+            </p>
+            <p
+                    class="status-text"
+                    style="margin-bottom: 15px"
+                    th:text="#{two.step.status.disable}"
+                    th:if="${loggedInUser?.isTwoFactorEnabled() == false}"
+            >
+                Two-step verification is currently disabled.
+            </p>
+            <form
+                    class="two-step-form"
+                    th:action="@{/auth/2fa/enable}"
+                    method="POST"
+                    id="enable-2fa-form"
+                    style="margin-bottom: 10px"
+                    th:if="${loggedInUser?.isTwoFactorEnabled() == false}"
+            >
+                <p th:text="#{two.step.enable.info}">
+                    Enhance your account security by enabling two-step verification
+                    via email.
+                </p>
+                <button
+                        type="submit"
+                        class="save-btn"
+                        id="two-step-enable"
+                        th:text="#{button.enable.2fa}"
+                >
+                    Enable Two-Step Verification
+                </button>
+            </form>
+            <form
+                    class="two-step-form"
+                    th:action="@{/auth/2fa/disable}"
+                    method="POST"
+                    id="disable-2fa-form"
+                    style="margin-bottom: 10px"
+                    th:if="${loggedInUser?.isTwoFactorEnabled() == true}"
+            >
+                <p th:text="#{two.step.disable.info}">
+                    Disable two-step verification to remove email-based security.
+                    Proceed with caution.
+                </p>
+                <button
+                        type="submit"
+                        class="save-btn"
+                        th:text="#{button.disable.2fa}"
+                >
+                    Disable Two-Step Verification
+                </button>
+            </form>
+        </div>
+        <div
+                class="password-set-block"
+                th:if="${loggedInUser?.isPasswordSet() == false}"
+        >
+            <h2
+                    style="margin-top: 30px; margin-bottom: 20px"
+                    th:text="#{heading.password.set}"
+            >
+                Password Set
+            </h2>
+            <form
+                    class="password-set-form"
+                    id="password-set-form"
+                    th:action="@{/auth/password/set}"
+                    method="POST"
+                    onsubmit="return passwordSetValidate()"
+            >
+                <div class="form-group">
+                    <label for="new-password" th:text="#{label.set.password}"
+                    >Set Password</label
+                    >
+                    <input
+                            type="password"
+                            id="set-new-password"
+                            name="password"
+                            th:value="${password}"
+                    />
+                    <p
+                            id="set-new-password-error"
+                            class="error-message"
+                            th:text="${setPasswordErrors?.hasFieldErrors('password')} ? ${setPasswordErrors.getFieldError('password').defaultMessage} : '' "
+                    ></p>
+                </div>
+                <div class="form-group">
+                    <label
+                            for="confirm-password"
+                            th:text="#{label.set.confirm.password}"
+                    >Confirm Password</label
+                    >
+                    <input
+                            type="password"
+                            id="set-confirm-password"
+                            name="confirmNewPassword"
+                            th:value="${confirmNewPassword}"
+                    />
+                    <p
+                            id="set-confirm-password-error"
+                            class="error-message"
+                            th:text="${setPasswordErrors?.hasFieldErrors('confirmNewPassword')} ? ${setPasswordErrors.getFieldError('confirmNewPassword').defaultMessage} : '' "
+                    ></p>
+                </div>
+                <div class="action-buttons">
+                    <button
+                            type="submit"
+                            class="save-btn"
+                            th:text="#{button.set.password}"
+                    >
+                        Set Password
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div
+                class="password-change-block"
+                th:if="${loggedInUser?.isPasswordSet() == true}"
+        >
+            <h2
+                    style="margin-top: 30px; margin-bottom: 20px"
+                    th:text="#{heading.password.change}"
+            >
+                Password Change
+            </h2>
+            <form
+                    class="password-change-form"
+                    th:action="@{/auth/password/update}"
+                    method="POST"
+                    id="password-change-form"
+                    onsubmit="return passwordValidate()"
+            >
+                <div class="form-group">
+                    <label for="old-password" th:text="#{label.old.password}"
+                    >Old Password</label
+                    >
+                    <input
+                            type="password"
+                            id="old-password"
+                            name="oldPassword"
+                            th:value="${oldPassword}"
+                    />
+                    <p
+                            id="old-password-invalid"
+                            class="error-message"
+                            th:text="${changePasswordErrors?.hasFieldErrors('oldPassword')} ? ${changePasswordErrors.getFieldError('oldPassword').defaultMessage} : '' "
+                    ></p>
+                    <p
+                            id="old-password-error"
+                            class="error-message"
+                            th:text="${oldPasswordInvalid}"
+                    ></p>
+                </div>
+                <div class="form-group">
+                    <label for="new-password" th:text="#{label.new.password}"
+                    >New Password</label
+                    >
+                    <input
+                            type="password"
+                            id="new-password"
+                            name="newPassword"
+                            th:value="${newPassword}"
+                    />
+                    <p
+                            id="new-password-error"
+                            class="error-message"
+                            th:text="${changePasswordErrors?.hasFieldErrors('newPassword')} ? ${changePasswordErrors.getFieldError('newPassword').defaultMessage} : '' "
+                    ></p>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password" th:text="#{label.confirm.password}"
+                    >Confirm New Password</label
+                    >
+                    <input
+                            type="password"
+                            id="confirm-password"
+                            name="confirmNewPassword"
+                            th:value="${confirmNewPassword}"
+                    />
+                    <p
+                            id="confirm-password-error"
+                            class="error-message"
+                            th:text="${changePasswordErrors?.hasFieldErrors('confirmNewPassword')} ? ${changePasswordErrors.getFieldError('confirmNewPassword').defaultMessage} : '' "
+                    ></p>
+                </div>
+                <div class="action-buttons">
+                    <button
+                            type="submit"
+                            class="save-btn"
+                            th:text="#{button.change.password}"
+                    >
+                        Change Password
+                    </button>
+                </div>
+                <p
+                        id="password-success"
+                        style="color: #28a745; margin-top: 10px"
+                        th:text="${passwordChangeSuccess}"
+                ></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="section uploads-news">
+        <div class="card-container">
+            <button
+                    class="upload-btn"
+                    onclick="window.location.href='/api/news/share'"
+            >
+                +
+            </button>
+            <div class="card-row"></div>
+        </div>
+    </div>
+
+    <div class="section subscriptions">
+        <h2 style="margin-bottom: 20px" th:text="#{label.subscribe.newsletters}">Newsletter Subscription</h2>
+        <div class="form-group">
+            <label for="newsletter-email">Email</label>
+            <input
+                    type="email"
+                    id="newsletter-email"
+                    th:value="${loggedInUser?.getEmail()}"
+                    readonly
+            />
+        </div>
+        <div class="action-buttons">
+            <button
+                    id="subscription-btn"
+                    class="subscribe-btn"
+                    th:text="${loggedInUser?.isSubscribed()} ? #{button.save.unsubscriptions} : #{button.save.subscriptions}"
+                    data-subscribed="${loggedInUser?.isSubscribed()}"
+            >
+                Subscribe
+            </button>
+        </div>
+    </div>
+
+    <div class="popup" id="confirmation-popup">
+        <form
+                id="delete-account-form"
+                th:action="@{/auth/delete-account}"
+                method="POST"
+        >
+            <div class="popup-content">
+                <p th:text="#{confirm.delete.account}">
+                    Are you sure you want to delete your account? This action cannot
+                    be undone.
+                </p>
+            </div>
+            <div class="popup-buttons">
+                <button type="submit" class="confirm-btn" th:text="#{button.yes}">
+                    Yes
+                </button>
+                <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="hidePopup()"
+                        th:text="#{button.no}"
+                >
+                    No
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="popup" id="delete-news-popup">
+        <form id="delete-news-form">
+            <div class="popup-content">
+                <p th:text="#{confirm.delete.news}">
+                    Are you sure you want to delete this news?
+                </p>
+            </div>
+            <div class="popup-buttons">
+                <button
+                        type="button"
+                        class="confirm-btn"
+                        id="confirmDeleteBtn"
+                        th:text="#{button.yes}"
+                >
+                    Yes
+                </button>
+                <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="hidePopup()"
+                        th:text="#{button.no}"
+                >
+                    No
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const userProfileErrorMessages = {
+        firstNameInvalid:
+        /*[[#{error.invalid.profile.firstname}]]*/ "First name is not valid.",
+        lastNameInvalid:
+        /*[[#{error.invalid.profile.lastname}]]*/ "Last name is not valid.",
+        emailInvalid: /*[[#{error.invalid.email}]]*/ "Email is not valid.",
+        phoneInvalid:
+        /*[[#{error.invalid.phone}]]*/ "Enter a valid 10-digit Phone number.",
+        cityInvalid: /*[[#{error.invalid.city}]]*/ "City is not valid.",
+        stateInvalid: /*[[#{error.invalid.state}]]*/ "State is not valid.",
+        dobInvalid: /*[[#{error.invalid.birthdate}]]*/ "Dob is not valid.",
+        genderInvalid: /*[[#{error.invalid.gender}]]*/ "Gender is not valid.",
+        setPasswordRequired:
+        /*[[#{error.required.set.password}]]*/ "Set password is required.",
+        oldPasswordRequired:
+        /*[[#{error.required.old.password}]]*/ "Old password is required.",
+        oldPasswordInvalid:
+        /*[[#{error.invalid.old.password}]]*/ "Invalid old password.",
+        newPasswordRequired:
+        /*[[#{error.required.new.password}]]*/ "New password is required.",
+        newPasswordInvalid:
+        /*[[#{error.invalid.new.password}]]*/ "Include letters, numbers, and symbols 8-16.",
+        confirmPasswordMismatch:
+        /*[[#{error.password.mismatch}]]*/ "Passwords do not match.",
+        noFile:
+        /*[[#{error.profile.no.file}]]*/ "Please select a profile photo to upload.",
+        invalidType:
+        /*[[#{error.profile.invalid.type}]]*/ "Please select a valid image file (JPG, JPEG, PNG).",
+        tooLarge:
+        /*[[#{error.profile.too.large}]]*/ "File size exceeds 2MB limit.",
+    };
+</script>
+<script th:src="@{/js/user/user-profile.js}"></script>
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Setup CSRF token for all Ajax requests
+    $(function () {
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+    });
+
+    // Load all user news on page load
+    $(document).ready(function () {
+        loadNewsAgain();
+    });
+
+    function loadNewsAgain() {
+        var userId = $("#loggedInUserId").val();
+
+        $.ajax({
+            url: "/api/news/user/" + userId,
+            type: "GET",
+            success: function (newsList) {
+                $(".card-row").empty(); // clear before add
+
+                $.each(newsList, function (index, news) {
+                    let cardHtml = `
+
+                    <div class="card">
+                    <div class="card-img">
+                        <a href="/api/news/details/${news.newsId}">
+                          <img id="newsImg" src="/uploads/images/post/${news.imageUrl}" alt="newsImg" />
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <div class="type">
+                            <p id="categoryName">${news.categoryName}</p>
+                        </div>
+                        <div class="title">
+                            <a id="newsTitle" href="/api/news/details/${news.newsId}">${news.title}</a>
+                        </div>
+                        <div class="user">
+                            <div class="user-info">
+                                <img id="userImg" src="/uploads/images/profile/${news.userProfileUrl}" alt="UserImg"/>
+                                <a href="" id="userName"><span>${news.userFirstName} ${news.userLastName}</span></a>
+                                <span id="createdDate">${news.createdAt}</span>
+                            </div>
+                            <button class="delete-btn" data-news-id="${news.newsId}" th:text="#{button.delete}">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                `;
+                    $(".card-row").append(cardHtml);
+                });
+            },
+            error: function () {
+                alert("Failed to load data!");
+            },
+        });
+    }
+
+    // Delete user post
+    let currentDeleteNewsId = null;
+    $(document).on("click", ".delete-btn", function () {
+        currentDeleteNewsId = $(this).data("news-id");
+        $("#delete-news-popup").show();
+    });
+
+    $("#confirmDeleteBtn").on("click", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "/api/news/delete/" + currentDeleteNewsId,
+            type: "DELETE",
+            success: function () {
+                $("#delete-news-popup").hide();
+                loadNewsAgain();
+            },
+            error: function () {
+                alert("Delete Failed!");
+            },
+        });
+    });
+
+    // hide popup function
+    function hidePopup() {
+        $("#delete-news-popup").hide();
+    }
+
+    // security
+    $(document).on("submit", "#enable-2fa-form, #disable-2fa-form", function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+        let url = form.attr("action");
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function (response) {
+                if (response.success) {
+                    if (response.enabled) {
+                        $(".two-step-form-block").html(`
+                        <h2 style="margin-bottom: 20px">Two-Step Verification Settings</h2>
+                        <p class="status-text" style="margin-bottom: 15px">
+                            Two-step verification is currently enabled.
+                        </p>
+                        <form class="two-step-form" action="/auth/2fa/disable" method="POST" id="disable-2fa-form">
+                            <p>Disable two-step verification to remove email-based security. Proceed with caution.</p>
+                            <button type="submit" class="save-btn">Disable Two-Step Verification</button>
+                        </form>
+                    `);
+                    } else {
+                        $(".two-step-form-block").html(`
+                        <h2 style="margin-bottom: 20px">Two-Step Verification Settings</h2>
+                        <p class="status-text" style="margin-bottom: 15px">
+                            Two-step verification is currently disabled.
+                        </p>
+                        <form class="two-step-form" action="/auth/2fa/enable" method="POST" id="enable-2fa-form">
+                            <p>Enhance your account security by enabling two-step verification via email.</p>
+                            <button type="submit" class="save-btn">Enable Two-Step Verification</button>
+                        </form>
+                    `);
+                    }
+                } else if (response.redirect) {
+                    window.location.href = response.redirect;
+                }
+            },
+            error: function () {
+                alert("Something went wrong. Please try again!");
+            }
+        });
+    });
+
+    // news-letter
+    $(document).on("click", "#subscription-btn", function (e) {
+        e.preventDefault();
+
+        let isSubscribed = $(this).data("subscribed");
+        let url = isSubscribed ? "/api/news/unsubscribe" : "/api/news/subscribe";
+        let btn = $(this);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function (response) {
+                if (response.success) {
+                    if (response.subscribed) {
+                        btn.text("Unsubscribe");
+                        btn.removeClass("subscribe-btn").addClass("unsubscribe-btn");
+                        btn.data("subscribed", true);
+                    } else {
+                        btn.text("Subscribe");
+                        btn.removeClass("unsubscribe-btn").addClass("subscribe-btn");
+                        btn.data("subscribed", false);
+                    }
+                } else if (response.redirect) {
+                    window.location.href = response.redirect;
+                }
+            },
+            error: function () {
+                alert("Something went wrong. Please try again!");
+            }
+        });
+    });
+</script>
+</body>
+</html>

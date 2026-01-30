@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #1a1d26;
+}
+
+.sign-in-container {
+    width: 100%;
+    max-width: 420px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: 20px;
+    border: 1px solid #e0e7ff;
+}
+
+.sign-in-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sign-in-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1d26;
+    font-style: italic;
+}
+
+.otp-form input {
+    letter-spacing: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.sign-in-form,
+.otp-form,
+.reset-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.sign-in-form input,
+.otp-form input {
+    height: 48px;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    color: #1a1d26;
+    background-color: #f9fafb;
+    transition: border-color 0.3s ease;
+    margin-bottom: 5px;
+}
+
+#password {
+    margin-bottom: 12px;
+}
+
+.reset-form {
+    margin-top: 10px;
+}
+
+.sign-in-form input:focus,
+.otp-form input:focus {
+    border-color: #ef002e;
+    outline: none;
+}
+
+.sign-in-form input::placeholder,
+.otp-form input::placeholder {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.sign-in-button,
+.otp-button,
+.reset-otp-button {
+    height: 48px;
+    background-color: #ef002e;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+.sign-in-button:hover,
+.otp-button:hover,
+.reset-otp-button:hover {
+    background-color: #d40028;
+    transform: translateY(-2px);
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.google-sign-in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    background-color: #f9fafb;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1d26;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.google-sign-in img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.google-sign-in:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-2px);
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.signup-link a {
+    font-size: 14px;
+    color: #ef002e;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.forgot-password a {
+    font-size: 14px;
+    color: #ef002e;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    font-size: 14px;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #ef002e;
+}
+
+.form-divider {
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0 10px;
+}
+
+@media screen and (max-width: 700px) {
+    .sign-in-container {
+        width: 90%;
+        padding: 25px;
+    }
+
+    .sign-in-header h1 {
+        font-size: 24px;
+    }
+
+    .sign-in-form input,
+    .otp-form input,
+    .sign-in-button,
+    .otp-button,
+    .reset-otp-button,
+    .google-sign-in {
+        height: 44px;
+    }
+}

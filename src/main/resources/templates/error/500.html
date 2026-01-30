@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="title" content="500 - Internal Server Error | News Group Management" />
+    <meta name="description" content="Something went wrong on our end. We're working to fix it. Explore News Group Management for the latest news." />
+    <title th:text="#{title.500}">500 - Internal Server Error | News Group Management</title>
+    <link rel="stylesheet" th:href="@{/css/error/500.css}">
+</head>
+<body>
+<div class="error-container">
+    <div class="error-code" th:text="#{500}">500</div>
+    <div class="error-message" th:text="#{error.server.internal}">Internal Server Error</div>
+    <div class="error-description" th:text="#{error.server.description}">
+        Our servers are experiencing an issue. Our team is working diligently to
+        resolve it. Please try again soon or contact support for assistance.
+    </div>
+    <div class="error-actions">
+        <a href="/" class="primary" th:text="#{button.back.home}">Back to Homepage</a>
+        <a href="/public/contact" class="secondary" th:text="#{button.contact.support}">Contact Support</a>
+    </div>
+</div>
+</body>
+</html>

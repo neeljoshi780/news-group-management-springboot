@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="title" content="About - News Group Management" />
+    <meta name="description" content="Learn about News Group Management, a platform for users to share and manage news content responsibly." />
+    <title th:text="#{title.about}">About - News Group Management</title>
+    <link rel="stylesheet" th:href="@{/css/public/about-us.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1 th:text="#{about.title}">About Us</h1>
+    <div class="section">
+        <p>
+            <span th:text="#{about.intro.line1}">Welcome to</span>&nbsp;<span class="highlight" th:text="#{app.name}">News Group Management</span>,<span th:text="#{about.intro.line2}">a
+            dynamic platform designed to empower individuals worldwide to share
+            and manage news content. Our mission is to foster a responsible
+            community where authentic stories and updates are shared with
+            integrity and transparency.</span>
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{about.purpose.title}">Our Purpose</h2>
+        <p th:text="#{about.purpose.description}">
+            News Group Management provides a public forum where users can sign up
+            and contribute news articles on a variety of topics, from technology
+            to health. We aim to create a space that encourages informed
+            discussions while upholding the highest standards of accuracy and
+            legality.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{about.features.title}">Key Features</h2>
+        <ul>
+            <li>
+                <span class="highlight" th:text="#{feature.registration.title}">User Registration:</span>&nbsp;&nbsp;<span th:text="#{feature.registration.desc}">Open to anyone
+                aged 13 or older, with a simple signup process.</span>
+            </li>
+            <li>
+                <span class="highlight" th:text="#{feature.posting.title}">Content Posting:</span>&nbsp;&nbsp;<span th:text="#{feature.posting.desc}">Share news with
+                categories, titles, descriptions, and images, subject to moderation.</span>
+            </li>
+            <li>
+                <span class="highlight" th:text="#{feature.guidelines.title}">Community Guidelines:</span>&nbsp;&nbsp;<span th:text="#{feature.guidelines.desc}">Strict policies
+                against misinformation, illegal content, and harmful behavior.</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{about.commitment.title}">Our Commitment</h2>
+        <p>
+            <span th:text="#{about.commitment.line1}">We are committed to maintaining a safe and lawful environment. Our
+            team actively monitors content, collaborates with authorities when
+            necessary, and enforces our</span>&nbsp;<a th:href="@{/public/terms}" th:text="#{about.commitment.termsLink}"
+        >Terms and Conditions</a
+        >&nbsp;<span th:text="#{about.commitment.line2}">to ensure compliance. For inquiries or support, contact us at</span>
+            <a href="mailto:newsgroupmanagement780@gmail.com"
+            >newsgroupmanagement780@gmail.com</a
+            >.
+        </p>
+    </div>
+
+    <div class="footer">
+        <p th:text="#{about.footer.copyright}">&copy; 2025 News Group Management</p>
+        <p th:text="#{about.footer.last.updated.full}">Last Updated: June 22, 2025, 07:08 PM IST</p>
+    </div>
+</div>
+</body>
+</html>

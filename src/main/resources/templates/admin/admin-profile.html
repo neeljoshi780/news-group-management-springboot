@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel | Profile - News Group Management</title>
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/admin/admin-profile.css">
+</head>
+<body>
+<!-- Include Sidebar -->
+<div th:replace="~{admin/sidebar :: sidebar}"></div>
+
+<!-- Include Header -->
+<div th:replace="~{admin/sidebar :: header}"></div>
+<!-- Main Content -->
+<main class="dashboard">
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2>Profile Details</h2>
+            <button id="edit-toggle" class="btn-edit">
+                <i class="fas fa-edit"></i> Edit Profile
+            </button>
+        </div>
+        <div class="profile-content">
+            <div class="profile-image">
+                <img th:src="@{'/uploads/images/profile/' + ${loggedInUser?.profilePhotoUrl}}" alt="Profile" id="profile-img" />
+                <form
+                        th:action="@{/admin/profile-photo/update}"
+                        method="post"
+                        id="image-form"
+                        enctype="multipart/form-data"
+                        class="image-upload hidden"
+                        onsubmit="return validateProfileImg()"
+                >
+                    <input
+                            type="file"
+                            name="profile-photo"
+                            id="profile-img-input"
+                            accept="image/*"
+                    />
+                    <button type="submit" class="btn-upload">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                    <span class="error" id="errorImage" th:text="${profileError}"></span>
+                </form>
+            </div>
+            <form
+                    id="profile-form"
+                    class="profile-form"
+                    th:action="@{/admin/profile-info/update}"
+                    method="post"
+                    onsubmit="return validate()"
+            >
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            th:value="${loggedInUser?.firstName}"
+                            readonly
+                    />
+                    <span id="errorFirstName" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            th:value="${loggedInUser?.lastName}"
+                            readonly
+                    />
+                    <span id="errorLastName" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" th:value="${loggedInUser?.email}" readonly />
+                    <span id="errorEmail" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input type="text" id="mobile" name="phone" th:value="${loggedInUser?.phone}" readonly />
+                    <span id="errorMobile" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" th:value="${loggedInUser?.city}" readonly />
+                    <span id="errorCity" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state" th:value="${loggedInUser?.state}" readonly />
+                    <span id="errorState" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" th:value="${loggedInUser?.dob}" readonly />
+                    <span id="errorDOB" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" disabled>
+                        <option
+                                th:value="''"
+                                disabled
+                                selected
+                                th:text="#{gender.select}"
+                                th:selected="${loggedInUser?.getGender()==null}"
+                        >
+                            Select your gender
+                        </option>
+                        <option
+                                th:value="MALE"
+                                th:text="#{gender.male}"
+                                th:selected="${loggedInUser?.getGender()?.name()=='MALE'}"
+                        >
+                            Male
+                        </option>
+                        <option
+                                th:value="FEMALE"
+                                th:text="#{gender.female}"
+                                th:selected="${loggedInUser?.getGender()?.name()=='FEMALE'}"
+                        >
+                            Female
+                        </option>
+                        <option
+                                th:value="OTHER"
+                                th:text="#{gender.other}"
+                                th:selected="${loggedInUser?.getGender()?.name()=='OTHER'}"
+                        >
+                            Other
+                        </option>
+                    </select>
+                    <span id="errorGender" class="form-error"></span>
+                </div>
+                <div class="form-actions hidden">
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button type="button" id="cancel-edit" class="btn-cancel">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<script src="/js/admin/admin-profile.js"></script>
+</body>
+</html>

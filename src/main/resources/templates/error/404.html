@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="title" content="404 - Page Not Found | News Group Management" />
+    <meta name="title" content="404 - Page Not Found | News Group Management" />
+    <meta name="description" content="The page you're looking for cannot be found. Explore News Group Management for the latest news in tech, politics, business, and more." />
+    <title th:text="#{title.404}">404 - Page Not Found | News Group Management</title>
+    <link rel="stylesheet" th:href="@{/css/error/404.css}">
+</head>
+<body>
+<div class="error-container">
+    <div class="error-code" th:text="#{404}">404</div>
+    <div class="error-message" th:text="#{error.page.notfound}">Page Not Found</div>
+    <div class="error-description" th:text="#{error.page.description}">
+        The page you’re looking for seems to have vanished. Explore our latest
+        stories in tech, politics, business, and more, or reach out to our
+        support team for help.
+    </div>
+    <div class="error-actions">
+        <a href="/" class="primary" th:text="#{button.back.home}">Back to Homepage</a>
+        <a href="/public/contact" class="secondary" th:text="#{button.contact.support}">Contact Support</a>
+    </div>
+</div>
+</body>
+</html>

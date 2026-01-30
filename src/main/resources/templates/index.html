@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.w3.org/1999/xhtml"
+>
+<head>
+    <meta charset="UTF-8" />
+    <meta
+            name="title"
+            content="News Group Management - Publish & Read News Across All Categories"
+    />
+    <meta
+            name="description"
+            content="News Group Management is a community-powered news platform where anyone can publish and explore articles on tech, politics, business, science, sports, and more."
+    />
+    <title th:text="#{title.home}">
+        News Group Management - Publish & Read News Across All Categories
+    </title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<!-- Include Header -->
+<div th:replace="~{layout/header :: header}"></div>
+
+<!-- Main Sections -->
+<main>
+    <div class="card-container">
+        <div class="card-row"></div>
+    </div>
+</main>
+<!-- Include Footer -->
+<div th:replace="~{layout/footer :: footer}"></div>
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Load all news on page load
+    $(document).ready(function () {
+        loadNewsByCategory(null);
+    });
+
+    // Clicked a category from header
+    $(document).on("click", ".category-link", function (e) {
+        e.preventDefault();
+        var categoryId = $(this).data("id");
+        loadNewsByCategory(categoryId);
+    });
+
+    // Clicked a home from header
+    $(document).on("click", "#home-link", function (e) {
+        e.preventDefault();
+        loadNewsByCategory(null);
+    });
+
+    // Function to call API
+    function loadNewsByCategory(categoryId) {
+        let apiUrl = "/api/news/home";
+        if (categoryId != null) {
+            apiUrl += "?categoryId=" + categoryId;
+        }
+
+        $.ajax({
+            url: apiUrl,
+            type: "GET",
+            success: function (newsList) {
+                $(".card-row").empty();
+
+                $.each(newsList, function(index, news){
+                    let cardHtml = `
+                <div class="card" data-id="${news.newsId}">
+                    <div class="card-img">
+                       <a href="/api/news/details/${news.newsId}">
+                         <img src="/uploads/images/post/${news.imageUrl}" alt="newsImg"/>
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <div class="type">
+                            <p>${news.categoryName}</p>
+                        </div>
+                        <div class="title">
+                            <a href="/api/news/details/${news.newsId}">${news.title}</a>
+                        </div>
+                        <div class="user">
+                            <img src="/uploads/images/profile/${news.userProfileUrl}" alt="UserImg"/>
+                            <a href="" id="userName"><span>${news.userFirstName} ${news.userLastName}</span></a>
+                            <span id="createdDate">${news.createdAt}</span>
+                        </div>
+                    </div>
+                </div>`;
+                    $(".card-row").append(cardHtml);
+                });
+            },
+            error: function () {
+                alert("Failed to load data!");
+            },
+        });
+    }
+
+    // Submit search form
+    $(document).on("submit", "#searchForm", function(e){
+        e.preventDefault();
+        var keyword = $("#searchInput").val();
+        loadNewsByKeyword(keyword);
+    });
+
+    function loadNewsByKeyword(keyword) {
+        let apiUrl = "/api/news/search?q=" + keyword;
+
+        $.ajax({
+            url: apiUrl,
+            type: "GET",
+            success: function(newsList) {
+                $(".card-row").empty();
+
+                $.each(newsList, function(index, news){
+                    let cardHtml = `
+                <div class="card">
+                    <div class="card-img">
+                        <img src="/uploads/images/post/${news.imageUrl}" alt="newsImg"/>
+                    </div>
+                    <div class="card-content">
+                        <div class="type">
+                            <p>${news.categoryName}</p>
+                        </div>
+                        <div class="title">
+                            <a href="">${news.title}</a>
+                        </div>
+                        <div class="user">
+                            <img src="/uploads/images/profile/${news.userProfileUrl}" alt="UserImg"/>
+                            <a id="userName" href=""><span>${news.userFirstName} ${news.userLastName}</span></a>
+                            <span id="createdDate">${news.createdAt}</span>
+                        </div>
+                    </div>
+                </div>`;
+                    $(".card-row").append(cardHtml);
+                });
+            },
+            error: function(xhr) {
+                alert("Failed to load search results!");
+                console.log(xhr.responseText);
+            }
+        });
+    }
+
+    // reload news list when any user publishes new news
+    const stream = new EventSource("/api/news/stream");
+    stream.addEventListener("new", function(event){
+        loadNewsByCategory(null);
+    });
+</script>
+</body>
+</html>

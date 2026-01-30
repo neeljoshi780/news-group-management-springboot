@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<body>
+<header th:fragment="header">
+    <!-- Head Top -->
+    <div class="head-top">
+        <div class="head-top-left">
+            <p th:text="${formattedDate}"></p>
+        </div>
+        <div class="head-top-right">
+            <!-- Language Dropdown -->
+            <div class="language-dropdown">
+                <i class="fa-solid fa-globe"></i>
+                <select
+                        id="lang-select"
+                        onchange="window.location.href='/?lang=' + this.value"
+                >
+                    <option value="en" th:selected="${#locale.language=='en'}">
+                        🇺🇸 English
+                    </option>
+                    <option value="hi" th:selected="${#locale.language=='hi'}">
+                        🇮🇳 हिन्दी
+                    </option>
+                    <option value="gu" th:selected="${#locale.language=='gu'}">
+                        🇮🇳 ગુજરાતી
+                    </option>
+                </select>
+            </div>
+
+            <!-- Auth Buttons -->
+            <div class="auth-buttons">
+                <a
+                        th:href="@{/auth/sign-in}"
+                        sec:authorize="isAnonymous()"
+                        th:text="#{btn.sign.in}"
+                >Sign In</a
+                >
+                <a
+                        th:href="@{/user/profile}"
+                        sec:authorize="isAuthenticated()"
+                        th:text="#{btn.account}"
+                >My Account</a
+                >
+            </div>
+        </div>
+    </div>
+
+    <!-- Branding & Search -->
+    <div class="navbar">
+        <div class="nav-col-1">
+            <h1 th:text="#{app.name}">News Group Management</h1>
+        </div>
+        <div class="nav-col-2">
+            <div class="nav-col-2-txt-btn">
+                <form action="" id="searchForm">
+                    <input
+                            type="search"
+                            name="search"
+                            id="searchInput"
+                            placeholder="Search news..."
+                            th:placeholder="#{placeholder.search}"
+                    />
+                    <button type="submit" id="search-button" th:text="#{btn.search}">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="navbar-link">
+        <div class="navbar-link-items">
+            <ul>
+                <li><a href="" id="home-link" th:text="#{nav.home}">Home</a></li>
+                <li th:each="c : ${categories}">
+                    <a
+                            href=""
+                            th:data-id="${c.categoryId}"
+                            class="category-link"
+                            th:value="${c.categoryId}"
+                            th:text="#{${'nav.' + c.name.toLowerCase()}}"
+                    ></a>
+                </li>
+                <li>
+                    <a th:href="@{/contact}" th:text="#{nav.contact}"
+                    >Contact</a
+                    >
+                </li>
+            </ul>
+        </div>
+        <hr />
+    </div>
+</header>
+</body>
+</html>

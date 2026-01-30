@@ -1,0 +1,270 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #1a1d26;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 420px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: 20px;
+    border: 1px solid #e0e7ff;
+}
+
+.signup-container:hover {
+    box-shadow: 1px 1px 12px #d4ecff;
+}
+
+.signup-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.signup-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1d26;
+    font-style: italic;
+}
+
+.email-form,
+.otp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.name-form,
+.password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.email-form input,
+.otp-form input,
+.name-form input,
+.password-form input {
+    height: 48px;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    color: #1a1d26;
+    background-color: #f9fafb;
+    transition: border-color 0.3s ease;
+}
+
+.otp-form input {
+    letter-spacing: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.email-form input:focus,
+.otp-form input:focus,
+.name-form input:focus,
+.password-form input:focus {
+    border-color: #ef002e;
+    outline: none;
+}
+
+.email-form input::placeholder,
+.otp-form input::placeholder,
+.name-form input::placeholder,
+.password-form input::placeholder {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.signup-button,
+.verify-otp-button,
+.submit-name-button,
+.set-password-button {
+    height: 48px;
+    background-color: #ef002e;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+.signup-button:hover,
+.verify-otp-button:hover,
+.submit-name-button:hover,
+.set-password-button:hover {
+    background-color: #d40028;
+    transform: translateY(-2px);
+}
+
+.google-signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    background-color: #f9fafb;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1d26;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.google-signup img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.google-signup:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-2px);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link a {
+    font-size: 14px;
+    color: #ef002e;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    font-size: 14px;
+    text-align: left;
+    margin-top: 5px;
+    color: #ef002e;
+}
+
+.form-divider {
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0 10px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    background-color: #f9fafb;
+}
+
+.checkbox-container input[type="checkbox"]:checked {
+    background-color: #ef002e;
+    border-color: #ef002e;
+}
+
+.checkbox-container input[type="checkbox"]:checked::after {
+    content: "\2713";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.checkbox-container label {
+    font-size: 14px;
+    color: #1a1d26;
+}
+
+.checkbox-container label a {
+    color: #ef002e;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.checkbox-container label a:hover {
+    text-decoration: underline;
+}
+
+#terms-error,
+#otp-incorrect {
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 700px) {
+    .signup-container {
+        width: 90%;
+        padding: 25px;
+    }
+
+    .signup-header h1 {
+        font-size: 24px;
+    }
+
+    .email-form input,
+    .otp-form input,
+    .name-form input,
+    .password-form input,
+    .signup-button,
+    .verify-otp-button,
+    .submit-name-button,
+    .set-password-button,
+    .google-signup {
+        height: 44px;
+    }
+}

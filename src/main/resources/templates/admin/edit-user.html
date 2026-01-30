@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel | Edit User Details - News Group Management</title>
+    <link rel="stylesheet" href="/css/admin/edit-user.css">
+</head>
+<body>
+<div class="form-widget">
+    <a th:href="@{/admin/manage-users}" class="back-link"
+    >Back to Admin Panel</a
+    >
+    <div class="form-header">
+        <h3><i class="fas fa-edit"></i> Update User Details</h3>
+    </div>
+    <form th:action="@{/admin/update/user}" method="POST" onsubmit="return validate()">
+        <div class="form-group">
+            <label for="firstName"><i class="fas fa-user"></i> First Name</label>
+            <input type="text" th:value="${activeUser?.getFirstName()}" id="firstName" name="firstName" />
+            <span class="form-error" id="errorFirstName"></span>
+        </div>
+        <div class="form-group">
+            <label for="lastName"><i class="fas fa-user"></i> Last Name</label>
+            <input type="text" th:value="${activeUser?.getLastName()}" id="lastName" name="lastName" />
+            <span class="form-error" id="errorLastName"></span>
+        </div>
+        <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" th:value="${activeUser?.getEmail()}" id="email" name="email" />
+            <span class="form-error" id="errorEmail"></span>
+        </div>
+        <div class="form-group">
+            <label for="phone"><i class="fas fa-phone"></i> Phone</label>
+            <input type="tel" th:value="${activeUser?.getPhone()}" id="phone" name="phone" />
+            <span class="form-error" id="errorPhone"></span>
+        </div>
+        <div class="form-group">
+            <label for="city"><i class="fas fa-city"></i> City</label>
+            <input type="text" th:value="${activeUser?.getCity()}" id="city" name="city" />
+            <span class="form-error" id="errorCity"></span>
+        </div>
+        <div class="form-group">
+            <label for="state"><i class="fas fa-map-marker-alt"></i> State</label>
+            <input type="text" th:value="${activeUser?.getState()}" id="state" name="state" />
+            <span class="form-error" id="errorState"></span>
+        </div>
+        <div class="form-group">
+            <label for="dob"
+            ><i class="fas fa-calendar-alt"></i> Date of Birth</label
+            >
+            <input type="date" th:value="${activeUser?.getDateOfBirth()}" id="dob" name="dateOfBirth" />
+            <span class="form-error" id="errorDOB"></span>
+        </div>
+        <div class="form-group">
+            <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+            <select id="gender" name="gender">
+                <option value="" th:selected="${activeUser?.getGender()==null}" disabled selected>Select Gender</option>
+                <option value="MALE" th:selected="${activeUser?.getGender()?.name()=='MALE'}">Male</option>
+                <option value="FEMALE" th:selected="${activeUser?.getGender()?.name()=='FEMALE'}">Female</option>
+                <option value="OTHER" th:selected="${activeUser?.getGender()?.name()=='OTHER'}">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="authProvider"
+            ><i class="fas fa-lock"></i> Auth Provider</label
+            >
+            <select id="authProvider" name="authProvider">
+                <option value="LOCAL" th:selected="${activeUser?.getAuthProvider()?.name()=='LOCAL'}">Local</option>
+                <option value="GOOGLE" th:selected="${activeUser?.getAuthProvider()?.name()=='GOOGLE'}">Google</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="prefLanguage"
+            ><i class="fas fa-language"></i> Preferred Language</label
+            >
+            <select id="prefLanguage" name="languagePreference">
+                <option value="EN" th:selected="${activeUser?.getLanguagePreference()?.name()=='EN'}">English</option>
+                <option value="HI" th:selected="${activeUser?.getLanguagePreference()?.name()=='HI'}">Hindi</option>
+                <option value="GU" th:selected="${activeUser?.getLanguagePreference()?.name()=='GU'}">Gujarati</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="disabled"
+            ><i class="fas fa-user-slash"></i> Account Disabled</label
+            >
+            <select id="disabled" name="enabled">
+                <option th:value="false" th:selected="${activeUser?.isEnabled()==false}">Yes</option>
+                <option th:value="true" th:selected="${activeUser?.isEnabled()==true}">No</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-save"></i> Update Details
+            </button>
+        </div>
+    </form>
+</div>
+<script src="/js/admin/edit-user.js"></script>
+</body>
+</html>

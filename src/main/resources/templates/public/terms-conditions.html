@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="title" content="Terms and Conditions - News Group Management" />
+    <meta name="description" content="Official Terms and Conditions for the News Group Management website, governing user registration, content posting, and legal compliance." />
+    <title th:text="#{title.terms}">Terms and Conditions - News Group Management</title>
+    <link rel="stylesheet" th:href="@{/css/public/terms-conditions.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1 th:text="#{terms.heading}">Terms and Conditions</h1>
+    <h2 th:text="#{terms.subheading}">News Group Management Website</h2>
+
+    <div class="section">
+        <h2 th:text="#{terms.section1.title}">1. Acceptance of Terms</h2>
+        <p th:text="#{terms.section1.content}">
+            By registering for an account and accessing the News Group Management
+            website ("Website"), you agree to comply with these Terms and
+            Conditions ("Terms"). Failure to adhere to these Terms constitutes
+            grounds for immediate account termination. If you do not accept these
+            Terms, you are prohibited from using the Website.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section2.title}">2. Eligibility and Account Registration</h2>
+        <p th:text="#{terms.section2.content}">
+            The Website is publicly accessible, permitting registration by any
+            individual aged 13 or older.
+        </p>
+        <ul>
+            <li th:text="#{terms.section2.point1}">
+                You must provide accurate, current, and complete registration
+                information. Any falsification may lead to account suspension or
+                legal action.
+            </li>
+            <li th:text="#{terms.section2.point2}">
+                You are solely responsible for safeguarding your account credentials
+                and for all activities conducted under your account.
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section3.title}">3. User-Generated Content and Posting Standards</h2>
+        <p th:text="#{terms.section3.p1}">
+            Users may submit news articles and associated content, subject to
+            review and moderation by the Website.
+        </p>
+        <p th:text="#{terms.section3.p2}">
+            All content must conform to applicable international, national, and
+            local laws, as well as these Terms. The Website retains the right to
+            remove or edit content at its discretion.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section4.title}">4. Prohibited Conduct and Content</h2>
+        <p th:text="#{terms.section4.intro}">The following are expressly forbidden:</p>
+        <ul>
+            <li>
+                <span class="strong" th:text="#{terms.section4.point1.title}">Harmful or Discriminatory Content:</span>
+                <span th:text="#{terms.section4.point1.desc}">Material promoting hate speech, harassment, or discrimination based
+                on race, religion, gender, ethnicity, or other protected attributes.</span>
+            </li>
+            <li>
+                <span class="strong" th:text="#{terms.section4.point2.title}">Terrorism and Violence:</span>
+                <span th:text="#{terms.section4.point2.desc}">Content that
+                endorses, incites, or provides support for terrorism, violent acts,
+                or affiliations with terrorist organizations.</span>
+            </li>
+            <li>
+                <span class="strong" th:text="#{terms.section4.point3.title}">Misinformation:</span>
+                <span th:text="#{terms.section4.point3.desc}">Deliberately false or
+                fabricated news, including manipulated media or unverified claims
+                presented as factual.</span>
+            </li>
+            <li>
+                <span class="strong" th:text="#{terms.section4.point4.title}">Illegal Activities:</span>
+                <span th:text="#{terms.section4.point4.desc}">Content violating
+                laws, such as copyright infringement, defamation, distribution of
+                illicit substances, or other criminal acts.</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section5.title}">5. Enforcement and User Ban Policy</h2>
+        <p th:text="#{terms.section5.intro}">
+            The Website reserves the unilateral right to suspend or permanently
+            ban users found in violation of these Terms.
+        </p>
+        <ul>
+            <li th:text="#{terms.section5.point1}">
+                Bans will be accompanied by notification via email to the registered
+                address, detailing the violation and ban duration.
+            </li>
+            <li>
+                <span th:text="#{terms.section5.point2.prefix}">Appeals may be submitted to</span>
+                <a href="mailto:newsgroupmanagement780@gmail.com"
+                >newsgroupmanagement780@gmail.com</a
+                >, <span th:text="#{terms.section5.point2.suffix}">subject to review by the Website administration.</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section6.title}">6. Legal Proceedings and Government Cooperation</h2>
+        <p th:text="#{terms.section6.p1}">
+            In instances of suspected illegal activity (e.g., terrorism promotion,
+            fake news, or other criminal conduct), the Website will initiate an
+            internal inquiry and may escalate the matter to relevant government
+            authorities.
+        </p>
+        <ul>
+            <li th:text="#{terms.section6.point1}">
+                User data, including account details and posted content, may be
+                disclosed to law enforcement as required by law.
+            </li>
+            <li th:text="#{terms.section6.point2}">
+                Users involved in illegal activities may face legal proceedings
+                initiated by the Website or government agencies, with potential
+                civil or criminal penalties.
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section7.title}">7. Intellectual Property Rights</h2>
+        <p th:text="#{terms.section7.p1}">
+            Users retain ownership of their original content but grant the Website
+            a non-exclusive, royalty-free license to host, display, and moderate
+            it.
+        </p>
+        <p th:text="#{terms.section7.p2}">
+            Unauthorized use of copyrighted material is prohibited and may result
+            in legal action against the offending user.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section8.title}">8. Limitation of Liability</h2>
+        <p th:text="#{terms.section8.p1}">
+            The Website is not liable for user-generated content or any legal
+            ramifications arising therefrom.
+        </p>
+        <p th:text="#{terms.section8.p2}">
+            Services are provided "as is," with all warranties, express or
+            implied, disclaimed to the fullest extent permitted by law.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section9.title}">9. Account Termination</h2>
+        <p th:text="#{terms.section9.p1}">
+            The Website may terminate or suspend accounts at its sole discretion
+            for breaches of these Terms or other reasons, with or without prior
+            notice.
+        </p>
+        <p>
+            <span th:text="#{terms.section9.p2.prefix}">Users may request account deletion by contacting</span>
+            <a href="mailto:newsgroupmanagement780@gmail.com"
+            >newsgroupmanagement780@gmail.com</a
+            >, <span th:text="#{terms.section9.p2.suffix}">subject to compliance with legal obligations.</span>
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section10.title}">10. Amendments to Terms</h2>
+        <p th:text="#{terms.section10.p1}">
+            These Terms may be updated periodically. Significant changes will be
+            communicated via email or a prominent notice on the Website.
+        </p>
+        <p th:text="#{terms.section10.p2}">
+            Continued use following amendments signifies acceptance of the revised
+            Terms.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section11.title}">11. Governing Law and Jurisdiction</h2>
+        <p th:text="#{terms.section11.p1}">
+            These Terms are governed by the laws of India. Any disputes shall be
+            resolved exclusively in the courts of New Delhi.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 th:text="#{terms.section12.title}">12. Contact and Inquiry</h2>
+        <p>
+            <span th:text="#{terms.section12.p1.prefix}">For inquiries, support, or appeals, contact the Website administration
+            at</span>
+            <a href="mailto:newsgroupmanagement780@gmail.com"
+            >newsgroupmanagement780@gmail.com</a
+            >.
+        </p>
+        <p th:text="#{terms.section12.p2}">Response times may vary based on the nature of the inquiry.</p>
+    </div>
+
+    <div class="footer">
+        <p th:text="#{terms.footer.effective}">Effective Date: June 22, 2025</p>
+        <p th:text="#{terms.footer.updated}">Last Updated: July 7, 2025, 07:07 PM IST</p>
+    </div>
+</div>
+</body>
+</html>
